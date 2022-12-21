@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Photo Search</string>
+
+    <string name="empty_screen">Looks like you have nothing saved. Start searching for photos, and bookmark the favorite ones.</string>
+    <string name="bookmark">bookmark</string>
+    <string name="photo">photo</string>
+</resources>
