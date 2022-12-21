@@ -22,7 +22,7 @@ class NavigatorImpl @Inject constructor(
 
             fragmentManager
                 .beginTransaction()
-                .add(R.id.container, fragment)
+                .replace(R.id.container, fragment)
                 .addToBackStack(fragment::class.java.name)
                 .commit()
         }
