@@ -26,3 +26,8 @@ flickr_api_key=YOUR_KEY
 - Sensible error handling and testing ✅
 - iOS ONLY: Use only system frameworks for network requests and parsing (not applicable)
 - Android ONLY: Ability to bookmark and view images offline 🚫
+
+# App Development
+- Architecture pattern: MVI
+- Testing coverage: unit tests
+- Image Processing: via Glide library
