@@ -60,8 +60,13 @@ class HomeViewModel @Inject constructor(
 
 
     private fun bindIntents(intents: Observable<HomeIntent>): Observable<HomeIntent> {
+        val dataIntent = repository.getSearchResults()
+            .map<HomeIntent> { photos ->
+                HomeIntent.MainContent(photos = photos)
+            }
+            .onErrorReturn { HomeIntent.Error(throwable = it) }
 
-        return intents.publish { downstream ->
+        val userIntents = intents.publish { downstream ->
 
             val searchFocused = downstream.ofType(HomeIntent.SearchFocused::class.java)
                 .flatMap {
@@ -83,9 +88,7 @@ class HomeViewModel @Inject constructor(
                 .filter { it.text.isNotEmpty() }
                 .switchMap { query ->
                     repository.searchPhotos(searchTerm = query.text)
-                        .map<HomeIntent> { photos ->
-                            HomeIntent.MainContent(photos = photos)
-                        }.toObservable()
+                        .toObservable<HomeIntent>()
                         .startWith(HomeIntent.Loading)
                         .onErrorReturn { HomeIntent.Error(throwable = it) }
                 }
@@ -111,5 +114,6 @@ class HomeViewModel @Inject constructor(
                 downstream.ofType(HomeIntent.SearchCleared::class.java)
             )
         }
+        return Observable.merge(dataIntent, userIntents)
     }
 }

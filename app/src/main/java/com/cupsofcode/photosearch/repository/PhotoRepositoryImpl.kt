@@ -40,7 +40,7 @@ class PhotoRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun searchPhotos(searchTerm: String): Single<List<Photo>> {
+    override fun searchPhotos(searchTerm: String): Completable {
         return Completable.fromAction {
             saveSearchQuery(searchTerm)
         }.andThen(
@@ -53,9 +53,13 @@ class PhotoRepositoryImpl @Inject constructor(
                 .map { it.photos.photo.map { it.toPhoto() } }
                 .flatMapCompletable {
                     photosInMemoryCache.clearAll().andThen(photosInMemoryCache.putAll(it) { it.id })
-                }.andThen(photosInMemoryCache.allSingle())
+                }
         )
 
+    }
+
+    override fun getSearchResults(): Observable<List<Photo>> {
+        return photosInMemoryCache.allObservable()
     }
 
     override fun bookmarkToggled(photoId: String): Completable {

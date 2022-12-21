@@ -10,7 +10,9 @@ interface PhotoRepository {
     fun getSavedSearches(): Single<List<String>>
     fun removeSearchItem(query: String): Completable
 
-    fun searchPhotos(searchTerm: String): Single<List<Photo>>
+    fun searchPhotos(searchTerm: String): Completable
+    fun getSearchResults(): Observable<List<Photo>>
+
     fun bookmarkToggled(photoId: String): Completable
     fun getPhotoDetails(photoId: String): Observable<Photo>
 }
