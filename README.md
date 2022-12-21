@@ -1,4 +1,6 @@
 # Photo-Search
+A small, but mighty photo-searching app using Flickr APIs.
+
 
 # Important Step
 
